@@ -33,11 +33,15 @@ class Application(private val args: Array<String>): KoinComponent {
 
 
         try {
-            println("Enter the video URL or ID (e.g., K8R6OOjS7):")
-            val videoUrl = scanner.nextLine()
+            //println("Enter the video URL or ID (e.g., K8R6OOjS7):")
+            //val videoUrl = scanner.nextLine()
 
-            val dispatcher = providerDispatcher.getProviderForUrl(videoUrl)
-            val videoID = dispatcher.getVideoID(videoUrl)
+            //val dispatcher = providerDispatcher.getProviderForUrl(videoUrl)
+            //val videoID = dispatcher.getVideoID(videoUrl)
+
+            val videoUrl = cliArguments.getVideoUrl();
+
+            val videoID = cliArguments.getVideoId();
 
             val defaultHeader = if (videoUrl.isValidUrl()) {
                 mapOf("Referer" to videoUrl?.extractReferer())
@@ -63,7 +67,15 @@ class Application(private val args: Array<String>): KoinComponent {
                     println("${index + 1}] ${video?.label} - ${video?.size.formatBytes()}")
                 }
 
-            val choice = scanner.nextInt()
+            val largestVideoIndex = videoSources
+                .mapIndexed { index, video -> index to (video?.size ?: 0L) }
+                .maxByOrNull { it.second }?.first ?: 0
+
+            val choice = largestVideoIndex + 1
+
+            println("selected item: ${choice}");
+
+            //val choice = scanner.nextInt()
             val resolution = videoSources[choice - 1]?.label
 
 

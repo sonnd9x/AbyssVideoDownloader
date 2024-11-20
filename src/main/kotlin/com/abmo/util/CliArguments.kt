@@ -73,4 +73,25 @@ class CliArguments(private val args: Array<String>) {
      */
     fun isVerboseEnabled() = args.contains("--verbose")
 
+    fun getVideoId(): String? {
+        val index = args.indexOf("-i")
+        if (index != -1 && index + 1 < args.size) {
+            return args[index + 1]
+        }
+        return null
+    }
+
+    /**
+     * Retrieves the video URL from command-line arguments.
+     *
+     * @return The video URL as a String, or null if not specified.
+     */
+    fun getVideoUrl(): String? {
+        val index = args.indexOf("-u")
+        if (index != -1 && index + 1 < args.size) {
+            return args[index + 1]
+        }
+        return null
+    }
+
 }
