@@ -43,7 +43,7 @@ class Application(private val args: Array<String>): KoinComponent {
 
             val videoID = cliArguments.getVideoId();
 
-            val defaultHeader = if (videoUrl.isValidUrl()) {
+            val defaultHeader = if (videoUrl?.isValidUrl()) {
                 mapOf("Referer" to videoUrl?.extractReferer())
             } else { emptyMap() }
 
